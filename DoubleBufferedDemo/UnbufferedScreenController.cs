@@ -11,7 +11,7 @@ namespace DoubleBufferedDemo
     class UnbufferedScreenController
     {
         private readonly Panel _panel;
-        private readonly Graphics _panelGraphics;
+        private Graphics _panelGraphics;
         private readonly Color _color;
 
         public readonly List<IScreenObject> _panelObjects = new List<IScreenObject>();
@@ -20,14 +20,24 @@ namespace DoubleBufferedDemo
         public UnbufferedScreenController(Panel panel, Color color)
         {
             _panel = panel;
-            _panelGraphics = panel.CreateGraphics();
             _color = color;
+
+            SetupGraphics();
 
             // Setup Timer
             _timer = new Timer();
             _timer.Interval = 1000 / 60;
             _timer.Tick += Redraw;
             _timer.Start();
+
+            _panel.SizeChanged += PanelResizeEvent;
+        }
+
+        public void PanelResizeEvent(object sender, EventArgs e) => SetupGraphics();
+
+        public void SetupGraphics()
+        {
+            _panelGraphics = _panel.CreateGraphics();
         }
 
         public void Redraw(object sender, EventArgs e)

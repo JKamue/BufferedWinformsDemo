@@ -14,9 +14,9 @@ namespace DoubleBufferedDemo
         private readonly Timer _timer;
         private readonly Color _color;
 
-        private readonly BufferedGraphicsContext _context;
-        private readonly BufferedGraphics _graphicsBuffer;
-        private readonly Graphics _panelGraphics;
+        private BufferedGraphicsContext _context;
+        private BufferedGraphics _graphicsBuffer;
+        private Graphics _panelGraphics;
 
         public readonly List<IScreenObject> _panelObjects = new List<IScreenObject>();
 
@@ -25,16 +25,24 @@ namespace DoubleBufferedDemo
             _panel = panel;
             _color = color;
 
-            // Setup Graphics
-            _context = BufferedGraphicsManager.Current;
-            _panelGraphics = _panel.CreateGraphics();
-            _graphicsBuffer = _context.Allocate(_panelGraphics, panel.DisplayRectangle);
+            SetupGraphics();
 
             // Setup Timer
             _timer = new Timer();
             _timer.Interval = 1000 / 60;
             _timer.Tick += Redraw;
             _timer.Start();
+
+            _panel.SizeChanged += PanelResizeEvent;
+        }
+
+        public void PanelResizeEvent(object sender, EventArgs e) => SetupGraphics();
+
+        public void SetupGraphics()
+        {
+            _context = BufferedGraphicsManager.Current;
+            _panelGraphics = _panel.CreateGraphics();
+            _graphicsBuffer = _context.Allocate(_panelGraphics, _panel.DisplayRectangle);
         }
 
         public void Redraw(object sender, EventArgs e)

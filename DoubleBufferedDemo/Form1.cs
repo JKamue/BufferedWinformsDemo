@@ -30,10 +30,10 @@ namespace DoubleBufferedDemo
 
         private void panel_Click(object sender, EventArgs e)
         {
-            var x = Rand.Next(0, 200);
-            var y = Rand.Next(0, 200);
-            var width = Rand.Next(0, 200);
-            var height = Rand.Next(0, 200);
+            var x = Rand.Next(0, pnlBuffered.Width / 2);
+            var y = Rand.Next(0, pnlBuffered.Height / 2);
+            var width = Rand.Next(0, pnlBuffered.Width / 2);
+            var height = Rand.Next(0, pnlBuffered.Height / 2);
 
             var square = new Square(new Point(x,y), new Size(width, height));
             BufferedController._panelObjects.Add(square);
