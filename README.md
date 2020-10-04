@@ -13,5 +13,5 @@ Then the whole buffer is drawn onto the screen at the same time. This gets rid o
 ## Example
 Normal Graphics are used on the left side while the right side uses [my double buffering class](https://gist.github.com/JKamue/97476d20b1a3a965079a30a3de33c4fe).
 <p align="center">
-  <img width="460" height="300" src="Docs/example.gif">
+  <img width="640" height="342" src="Docs/example.gif">
 </p>
